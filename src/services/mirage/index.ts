@@ -2,7 +2,8 @@ import { createServer, Factory, Model } from 'miragejs';
 
 import faker from 'faker';
 
-type User = {
+export type User = {
+  id: string;
   name: string;
   email: string;
   created_at: string;
@@ -16,8 +17,8 @@ function makeServer() {
 
     factories: {
       user: Factory.extend({
-        name(index: number) {
-          return `${faker.name.findName()} - ${index}`;
+        name() {
+          return faker.name.findName();
         },
         email() {
           return faker.internet.email().toLocaleLowerCase();
@@ -29,7 +30,7 @@ function makeServer() {
     },
 
     seeds(server) {
-      server.createList('user', 100);
+      server.createList('user', 10);
     },
 
     routes() {
