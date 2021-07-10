@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+import { useEffect } from 'react';
+
 import {
   Box,
   Flex,
@@ -25,6 +27,12 @@ import { Pagination } from '../../components/Pagination';
 
 export default function UserList() {
   const isWideVersion = useBreakpointValue({ base: false, lg: true });
+
+  useEffect(() => {
+    fetch('http://localhost:3000/dashgo-api/users')
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+  }, []);
 
   return (
     <Box>
