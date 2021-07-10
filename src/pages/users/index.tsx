@@ -29,30 +29,39 @@ import { Pagination } from '../../components/Pagination';
 import { User } from '../../services/mirage';
 
 export default function UserList() {
-  const { data, isLoading, error } = useQuery('users', async () => {
-    const route = 'http://localhost:3000/dashgo-api/users';
+  const { data, isLoading, error } = useQuery(
+    'users',
+    async () => {
+      const route = 'http://localhost:3000/dashgo-api/users';
 
-    const response = await fetch(route);
-    const data = await response.json();
+      const response = await fetch(route);
+      const data = await response.json();
 
-    const users = data.users.map((user: User) => {
-      const { id, name, email, created_at } = user;
+      const users = data.users.map((user: User) => {
+        const { id, name, email, created_at } = user;
 
-      return {
-        id,
-        name,
-        email,
-        created_at: new Date(created_at).toLocaleDateString('pt-br', {
-          weekday: 'long',
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        })
-      };
-    });
+        return {
+          id,
+          name,
+          email,
+          created_at: new Date(created_at).toLocaleDateString(
+            'pt-br',
+            {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            }
+          )
+        };
+      });
 
-    return users;
-  });
+      return users;
+    },
+    {
+      staleTime: 1000 * 5 // five seconds
+    }
+  );
 
   const isWideVersion = useBreakpointValue({ base: false, lg: true });
 
