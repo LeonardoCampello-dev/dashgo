@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from 'next/link';
 
 import {
   Box,
@@ -16,21 +16,21 @@ import {
   Text,
   useBreakpointValue,
   Spinner
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
 
-import { RiAddLine, RiPencilLine } from 'react-icons/ri'
+import { RiAddLine, RiPencilLine } from 'react-icons/ri';
 
-import { Header } from '../../components/Header'
-import { Sidebar } from '../../components/Sidebar'
-import { Pagination } from '../../components/Pagination'
+import { Header } from '../../components/Header';
+import { Sidebar } from '../../components/Sidebar';
+import { Pagination } from '../../components/Pagination';
 
-import { User } from '../../services/mirage'
-import { useUsers } from '../../services/hooks/useUsers'
+import { User } from '../../services/mirage';
+import { useUsers } from '../../services/hooks/useUsers';
 
 export default function UserList() {
-  const { data, isLoading, error, isFetching } = useUsers()
+  const { data, isLoading, error, isFetching } = useUsers();
 
-  const isWideVersion = useBreakpointValue({ base: false, lg: true })
+  const isWideVersion = useBreakpointValue({ base: false, lg: true });
 
   return (
     <Box>
@@ -98,7 +98,7 @@ export default function UserList() {
 
                 <Tbody>
                   {data.map((user: User) => {
-                    const { id, name, email, created_at } = user
+                    const { id, name, email, created_at } = user;
 
                     return (
                       <Tr key={id}>
@@ -136,16 +136,20 @@ export default function UserList() {
                           </Td>
                         )}
                       </Tr>
-                    )
+                    );
                   })}
                 </Tbody>
               </Table>
 
-              <Pagination />
+              <Pagination
+                totalCountOfRegisters={200}
+                currentPage={5}
+                onPageChange={() => {}}
+              />
             </>
           )}
         </Box>
       </Flex>
     </Box>
-  )
+  );
 }
