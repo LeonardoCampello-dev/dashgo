@@ -1,6 +1,6 @@
-import Link from 'next/link';
+import Link from 'next/link'
 
-import { useQuery } from 'react-query';
+import { useQuery } from 'react-query'
 
 import {
   Box,
@@ -18,27 +18,27 @@ import {
   Text,
   useBreakpointValue,
   Spinner
-} from '@chakra-ui/react';
+} from '@chakra-ui/react'
 
-import { RiAddLine, RiPencilLine } from 'react-icons/ri';
+import { RiAddLine, RiPencilLine } from 'react-icons/ri'
 
-import { Header } from '../../components/Header';
-import { Sidebar } from '../../components/Sidebar';
-import { Pagination } from '../../components/Pagination';
+import { Header } from '../../components/Header'
+import { Sidebar } from '../../components/Sidebar'
+import { Pagination } from '../../components/Pagination'
 
-import { User } from '../../services/mirage';
+import { User } from '../../services/mirage'
 
 export default function UserList() {
-  const { data, isLoading, error } = useQuery(
+  const { data, isLoading, error, isFetching } = useQuery(
     'users',
     async () => {
-      const route = 'http://localhost:3000/dashgo-api/users';
+      const route = 'http://localhost:3000/dashgo-api/users'
 
-      const response = await fetch(route);
-      const data = await response.json();
+      const response = await fetch(route)
+      const data = await response.json()
 
       const users = data.users.map((user: User) => {
-        const { id, name, email, created_at } = user;
+        const { id, name, email, created_at } = user
 
         return {
           id,
@@ -53,17 +53,17 @@ export default function UserList() {
               day: 'numeric'
             }
           )
-        };
-      });
+        }
+      })
 
-      return users;
+      return users
     },
     {
       staleTime: 1000 * 5 // five seconds
     }
-  );
+  )
 
-  const isWideVersion = useBreakpointValue({ base: false, lg: true });
+  const isWideVersion = useBreakpointValue({ base: false, lg: true })
 
   return (
     <Box>
@@ -76,6 +76,9 @@ export default function UserList() {
           <Flex mb='8' justify='space-between' align='center'>
             <Heading size='lg' fontWeight='normal'>
               Usuários
+              {!isLoading && isFetching && (
+                <Spinner size='sm' color='gray.500' marginLeft='4' />
+              )}
             </Heading>
 
             <Link href='/users/create' passHref>
@@ -128,7 +131,7 @@ export default function UserList() {
 
                 <Tbody>
                   {data.map((user: User) => {
-                    const { id, name, email, created_at } = user;
+                    const { id, name, email, created_at } = user
 
                     return (
                       <Tr key={id}>
@@ -166,7 +169,7 @@ export default function UserList() {
                           </Td>
                         )}
                       </Tr>
-                    );
+                    )
                   })}
                 </Tbody>
               </Table>
@@ -177,5 +180,5 @@ export default function UserList() {
         </Box>
       </Flex>
     </Box>
-  );
+  )
 }
