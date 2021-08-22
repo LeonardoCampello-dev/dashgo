@@ -27,15 +27,13 @@ import { Sidebar } from '../../components/Sidebar'
 import { Pagination } from '../../components/Pagination'
 
 import { User } from '../../services/mirage'
+import { api } from '../../services/api'
 
 export default function UserList() {
   const { data, isLoading, error, isFetching } = useQuery(
     'users',
     async () => {
-      const route = 'http://localhost:3000/dashgo-api/users'
-
-      const response = await fetch(route)
-      const data = await response.json()
+      const { data } = await api('users')
 
       const users = data.users.map((user: User) => {
         const { id, name, email, created_at } = user
