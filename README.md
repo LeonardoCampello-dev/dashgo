@@ -1,12 +1,4 @@
-<h1 align="center">
-    <img
-        src="https://media.giphy.com/media/QrU69LU0LIuYJ9OQ4C/giphy.gif"
-        width="400"
-        alt="Pink background"
-    >
-</h1>
-
-<h1 align="center">Dashgo</h1>
+<h1 align="center">Dashgo 🦄</h1>
 
 <h4 align="center">
 
