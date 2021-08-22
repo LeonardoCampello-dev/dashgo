@@ -1,7 +1,5 @@
 import Link from 'next/link'
 
-import { useQuery } from 'react-query'
-
 import {
   Box,
   Flex,
@@ -27,39 +25,10 @@ import { Sidebar } from '../../components/Sidebar'
 import { Pagination } from '../../components/Pagination'
 
 import { User } from '../../services/mirage'
-import { api } from '../../services/api'
+import { useUsers } from '../../services/hooks/useUsers'
 
 export default function UserList() {
-  const { data, isLoading, error, isFetching } = useQuery(
-    'users',
-    async () => {
-      const { data } = await api('users')
-
-      const users = data.users.map((user: User) => {
-        const { id, name, email, created_at } = user
-
-        return {
-          id,
-          name,
-          email,
-          created_at: new Date(created_at).toLocaleDateString(
-            'pt-br',
-            {
-              weekday: 'long',
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric'
-            }
-          )
-        }
-      })
-
-      return users
-    },
-    {
-      staleTime: 1000 * 5 // five seconds
-    }
-  )
+  const { data, isLoading, error, isFetching } = useUsers()
 
   const isWideVersion = useBreakpointValue({ base: false, lg: true })
 
