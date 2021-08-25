@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import Link from 'next/link';
 
 import {
@@ -28,7 +30,8 @@ import { User } from '../../services/mirage';
 import { useUsers } from '../../services/hooks/useUsers';
 
 export default function UserList() {
-  const { data, isLoading, error, isFetching } = useUsers();
+  const [page, setPage] = useState(1);
+  const { data, isLoading, error, isFetching } = useUsers(page);
 
   const isWideVersion = useBreakpointValue({ base: false, lg: true });
 
@@ -97,7 +100,7 @@ export default function UserList() {
                 </Thead>
 
                 <Tbody>
-                  {data.map((user: User) => {
+                  {data.users.map((user: User) => {
                     const { id, name, email, created_at } = user;
 
                     return (
@@ -142,9 +145,9 @@ export default function UserList() {
               </Table>
 
               <Pagination
-                totalCountOfRegisters={200}
-                currentPage={5}
-                onPageChange={() => {}}
+                totalCountOfRegisters={data.totalCount}
+                currentPage={page}
+                onPageChange={setPage}
               />
             </>
           )}
